@@ -1,0 +1,556 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5C9308781E138EC3006E6CE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9308771E138EC3006E6CE0 /* main.m */; };
+		5C93087B1E138EC3006E6CE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C93087A1E138EC3006E6CE0 /* AppDelegate.m */; };
+		5C93087E1E138EC3006E6CE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C93087D1E138EC3006E6CE0 /* ViewController.m */; };
+		5C9308811E138EC3006E6CE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C93087F1E138EC3006E6CE0 /* Main.storyboard */; };
+		5C9308831E138EC3006E6CE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C9308821E138EC3006E6CE0 /* Assets.xcassets */; };
+		5C9308861E138EC3006E6CE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C9308841E138EC3006E6CE0 /* LaunchScreen.storyboard */; };
+		5C9308911E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9308901E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.m */; };
+		5C93089C1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C93089B1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.m */; };
+		5C9308B11E139559006E6CE0 /* LIXScrollTopBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9308B01E139559006E6CE0 /* LIXScrollTopBarView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5C93088D1E138EC3006E6CE0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C93086B1E138EC3006E6CE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C9308721E138EC3006E6CE0;
+			remoteInfo = LIXScrollTopBarViewDemo;
+		};
+		5C9308981E138EC3006E6CE0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C93086B1E138EC3006E6CE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C9308721E138EC3006E6CE0;
+			remoteInfo = LIXScrollTopBarViewDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5C9308731E138EC3006E6CE0 /* LIXScrollTopBarViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LIXScrollTopBarViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C9308771E138EC3006E6CE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5C9308791E138EC3006E6CE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5C93087A1E138EC3006E6CE0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5C93087C1E138EC3006E6CE0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5C93087D1E138EC3006E6CE0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5C9308801E138EC3006E6CE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5C9308821E138EC3006E6CE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5C9308851E138EC3006E6CE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5C9308871E138EC3006E6CE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C93088C1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LIXScrollTopBarViewDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C9308901E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LIXScrollTopBarViewDemoTests.m; sourceTree = "<group>"; };
+		5C9308921E138EC3006E6CE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C9308971E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LIXScrollTopBarViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C93089B1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LIXScrollTopBarViewDemoUITests.m; sourceTree = "<group>"; };
+		5C93089D1E138EC3006E6CE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C9308AF1E139559006E6CE0 /* LIXScrollTopBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIXScrollTopBarView.h; sourceTree = "<group>"; };
+		5C9308B01E139559006E6CE0 /* LIXScrollTopBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIXScrollTopBarView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5C9308701E138EC3006E6CE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9308891E138EC3006E6CE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9308941E138EC3006E6CE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5C93086A1E138EC3006E6CE0 = {
+			isa = PBXGroup;
+			children = (
+				5C9308751E138EC3006E6CE0 /* LIXScrollTopBarViewDemo */,
+				5C93088F1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests */,
+				5C93089A1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests */,
+				5C9308741E138EC3006E6CE0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5C9308741E138EC3006E6CE0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5C9308731E138EC3006E6CE0 /* LIXScrollTopBarViewDemo.app */,
+				5C93088C1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.xctest */,
+				5C9308971E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5C9308751E138EC3006E6CE0 /* LIXScrollTopBarViewDemo */ = {
+			isa = PBXGroup;
+			children = (
+				5C9308AE1E139559006E6CE0 /* LIXScrollTabBar */,
+				5C9308791E138EC3006E6CE0 /* AppDelegate.h */,
+				5C93087A1E138EC3006E6CE0 /* AppDelegate.m */,
+				5C93087C1E138EC3006E6CE0 /* ViewController.h */,
+				5C93087D1E138EC3006E6CE0 /* ViewController.m */,
+				5C93087F1E138EC3006E6CE0 /* Main.storyboard */,
+				5C9308821E138EC3006E6CE0 /* Assets.xcassets */,
+				5C9308841E138EC3006E6CE0 /* LaunchScreen.storyboard */,
+				5C9308871E138EC3006E6CE0 /* Info.plist */,
+				5C9308761E138EC3006E6CE0 /* Supporting Files */,
+			);
+			path = LIXScrollTopBarViewDemo;
+			sourceTree = "<group>";
+		};
+		5C9308761E138EC3006E6CE0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5C9308771E138EC3006E6CE0 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5C93088F1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				5C9308901E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.m */,
+				5C9308921E138EC3006E6CE0 /* Info.plist */,
+			);
+			path = LIXScrollTopBarViewDemoTests;
+			sourceTree = "<group>";
+		};
+		5C93089A1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5C93089B1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.m */,
+				5C93089D1E138EC3006E6CE0 /* Info.plist */,
+			);
+			path = LIXScrollTopBarViewDemoUITests;
+			sourceTree = "<group>";
+		};
+		5C9308AE1E139559006E6CE0 /* LIXScrollTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				5C9308AF1E139559006E6CE0 /* LIXScrollTopBarView.h */,
+				5C9308B01E139559006E6CE0 /* LIXScrollTopBarView.m */,
+			);
+			path = LIXScrollTabBar;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5C9308721E138EC3006E6CE0 /* LIXScrollTopBarViewDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9308A01E138EC3006E6CE0 /* Build configuration list for PBXNativeTarget "LIXScrollTopBarViewDemo" */;
+			buildPhases = (
+				5C93086F1E138EC3006E6CE0 /* Sources */,
+				5C9308701E138EC3006E6CE0 /* Frameworks */,
+				5C9308711E138EC3006E6CE0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LIXScrollTopBarViewDemo;
+			productName = LIXScrollTopBarViewDemo;
+			productReference = 5C9308731E138EC3006E6CE0 /* LIXScrollTopBarViewDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5C93088B1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9308A31E138EC3006E6CE0 /* Build configuration list for PBXNativeTarget "LIXScrollTopBarViewDemoTests" */;
+			buildPhases = (
+				5C9308881E138EC3006E6CE0 /* Sources */,
+				5C9308891E138EC3006E6CE0 /* Frameworks */,
+				5C93088A1E138EC3006E6CE0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C93088E1E138EC3006E6CE0 /* PBXTargetDependency */,
+			);
+			name = LIXScrollTopBarViewDemoTests;
+			productName = LIXScrollTopBarViewDemoTests;
+			productReference = 5C93088C1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5C9308961E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9308A61E138EC3006E6CE0 /* Build configuration list for PBXNativeTarget "LIXScrollTopBarViewDemoUITests" */;
+			buildPhases = (
+				5C9308931E138EC3006E6CE0 /* Sources */,
+				5C9308941E138EC3006E6CE0 /* Frameworks */,
+				5C9308951E138EC3006E6CE0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C9308991E138EC3006E6CE0 /* PBXTargetDependency */,
+			);
+			name = LIXScrollTopBarViewDemoUITests;
+			productName = LIXScrollTopBarViewDemoUITests;
+			productReference = 5C9308971E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5C93086B1E138EC3006E6CE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = lixuzong;
+				TargetAttributes = {
+					5C9308721E138EC3006E6CE0 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 672YA2K933;
+						ProvisioningStyle = Automatic;
+					};
+					5C93088B1E138EC3006E6CE0 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 672YA2K933;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5C9308721E138EC3006E6CE0;
+					};
+					5C9308961E138EC3006E6CE0 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 672YA2K933;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5C9308721E138EC3006E6CE0;
+					};
+				};
+			};
+			buildConfigurationList = 5C93086E1E138EC3006E6CE0 /* Build configuration list for PBXProject "LIXScrollTopBarViewDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5C93086A1E138EC3006E6CE0;
+			productRefGroup = 5C9308741E138EC3006E6CE0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5C9308721E138EC3006E6CE0 /* LIXScrollTopBarViewDemo */,
+				5C93088B1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests */,
+				5C9308961E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5C9308711E138EC3006E6CE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C9308861E138EC3006E6CE0 /* LaunchScreen.storyboard in Resources */,
+				5C9308831E138EC3006E6CE0 /* Assets.xcassets in Resources */,
+				5C9308811E138EC3006E6CE0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C93088A1E138EC3006E6CE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9308951E138EC3006E6CE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5C93086F1E138EC3006E6CE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C93087E1E138EC3006E6CE0 /* ViewController.m in Sources */,
+				5C93087B1E138EC3006E6CE0 /* AppDelegate.m in Sources */,
+				5C9308781E138EC3006E6CE0 /* main.m in Sources */,
+				5C9308B11E139559006E6CE0 /* LIXScrollTopBarView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9308881E138EC3006E6CE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C9308911E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9308931E138EC3006E6CE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C93089C1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5C93088E1E138EC3006E6CE0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C9308721E138EC3006E6CE0 /* LIXScrollTopBarViewDemo */;
+			targetProxy = 5C93088D1E138EC3006E6CE0 /* PBXContainerItemProxy */;
+		};
+		5C9308991E138EC3006E6CE0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C9308721E138EC3006E6CE0 /* LIXScrollTopBarViewDemo */;
+			targetProxy = 5C9308981E138EC3006E6CE0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5C93087F1E138EC3006E6CE0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5C9308801E138EC3006E6CE0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5C9308841E138EC3006E6CE0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5C9308851E138EC3006E6CE0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5C93089E1E138EC3006E6CE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5C93089F1E138EC3006E6CE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5C9308A11E138EC3006E6CE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 672YA2K933;
+				INFOPLIST_FILE = LIXScrollTopBarViewDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lixuzong.LIXScrollTopBarViewDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5C9308A21E138EC3006E6CE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 672YA2K933;
+				INFOPLIST_FILE = LIXScrollTopBarViewDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lixuzong.LIXScrollTopBarViewDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5C9308A41E138EC3006E6CE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 672YA2K933;
+				INFOPLIST_FILE = LIXScrollTopBarViewDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lixuzong.LIXScrollTopBarViewDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LIXScrollTopBarViewDemo.app/LIXScrollTopBarViewDemo";
+			};
+			name = Debug;
+		};
+		5C9308A51E138EC3006E6CE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 672YA2K933;
+				INFOPLIST_FILE = LIXScrollTopBarViewDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lixuzong.LIXScrollTopBarViewDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LIXScrollTopBarViewDemo.app/LIXScrollTopBarViewDemo";
+			};
+			name = Release;
+		};
+		5C9308A71E138EC3006E6CE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 672YA2K933;
+				INFOPLIST_FILE = LIXScrollTopBarViewDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lixuzong.LIXScrollTopBarViewDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LIXScrollTopBarViewDemo;
+			};
+			name = Debug;
+		};
+		5C9308A81E138EC3006E6CE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 672YA2K933;
+				INFOPLIST_FILE = LIXScrollTopBarViewDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lixuzong.LIXScrollTopBarViewDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LIXScrollTopBarViewDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5C93086E1E138EC3006E6CE0 /* Build configuration list for PBXProject "LIXScrollTopBarViewDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C93089E1E138EC3006E6CE0 /* Debug */,
+				5C93089F1E138EC3006E6CE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C9308A01E138EC3006E6CE0 /* Build configuration list for PBXNativeTarget "LIXScrollTopBarViewDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9308A11E138EC3006E6CE0 /* Debug */,
+				5C9308A21E138EC3006E6CE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C9308A31E138EC3006E6CE0 /* Build configuration list for PBXNativeTarget "LIXScrollTopBarViewDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9308A41E138EC3006E6CE0 /* Debug */,
+				5C9308A51E138EC3006E6CE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C9308A61E138EC3006E6CE0 /* Build configuration list for PBXNativeTarget "LIXScrollTopBarViewDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9308A71E138EC3006E6CE0 /* Debug */,
+				5C9308A81E138EC3006E6CE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5C93086B1E138EC3006E6CE0 /* Project object */;
+}
