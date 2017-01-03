@@ -72,12 +72,15 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 @property (nonatomic, assign) LIXScrollTopBarType style;
 @property (nonatomic, assign) CGRect targetRect;
+@property (nonatomic, strong) UIColor *selectedColor;
+@property (nonatomic, strong) UIColor *deSelectedColor;
 
 @end
 
 @interface LIXScrollTopBarContentFlowLayout : UICollectionViewFlowLayout
 
 @property (nonatomic,strong) NSIndexPath *currentIndexPath;
+@property (nonatomic, assign) LIXScrollTopBarContentTransformStyle transformStyle;
 
 @end
 
@@ -335,9 +338,11 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     
-    self.isDragging = YES;
-    
-    preContentOffsetX = scrollView.contentOffset.x;
+    if (scrollView == self.contentCollectionView) {
+        self.isDragging = YES;
+        
+        preContentOffsetX = scrollView.contentOffset.x;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -402,14 +407,17 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
-    self.isDragging = NO;
-    
-    NSIndexPath *indexPath = [self.topBarCollectionView indexPathForItemAtPoint:CGPointMake(CGRectGetMidX(self.topBarbaseLine.frame), 0)];
-    self.currentIndex = indexPath.row;
-    
-    if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didScrollToIndex:))) {
-        [self.delegate scrollTopBar:self didScrollToIndex:indexPath.row];
+    if (scrollView == self.contentCollectionView) {
+        self.isDragging = NO;
+        
+        NSIndexPath *indexPath = [self.topBarCollectionView indexPathForItemAtPoint:CGPointMake(CGRectGetMidX(self.topBarbaseLine.frame), 0)];
+        self.currentIndex = indexPath.row;
+        
+        if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didScrollToIndex:))) {
+            [self.delegate scrollTopBar:self didScrollToIndex:indexPath.row];
+        }
     }
+    
 }
 
 #pragma mark - get & set method
@@ -517,6 +525,8 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         _contentFlowLayout.minimumInteritemSpacing = 0;
         _contentFlowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, self.topBarHeight, self.bounds.size.width, self.bounds.size.height - self.topBarHeight) collectionViewLayout:_contentFlowLayout];
+        
+        collectionView.backgroundColor = [UIColor lightGrayColor];
         
         collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         collectionView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -631,7 +641,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
             
             UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.contentView.bounds collectionViewLayout:flowLayout];
             
-            collectionView.backgroundColor = [UIColor whiteColor];
+            collectionView.backgroundColor = [UIColor grayColor];
             collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             collectionView.translatesAutoresizingMaskIntoConstraints = YES;
             
@@ -794,7 +804,22 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     
     CGFloat distanceFromTargetRectToItem = CGRectGetMidX(self.targetRect) - attributes.center.x;
     CGFloat normalizedDistance = MIN(1, ABS(distanceFromTargetRectToItem / attributes.size.width));
-    UIColor *color = [UIColor colorWithRed:(255.0f - 255.0f * normalizedDistance) green:0 blue:0 alpha:1];
+    
+    CGColorRef fromcolor = [[UIColor redColor] CGColor];
+    size_t fromNumComponents = CGColorGetNumberOfComponents(fromcolor);
+    CGFloat fR, fG = 0.0, fB = 0.0;
+    if (fromNumComponents == 4) {
+        const CGFloat *components = CGColorGetComponents(fromcolor);
+        fR = components[0];
+        fG = components[1];
+        fB = components[2];
+    }
+    
+    CGFloat red = fR * (1 - normalizedDistance);
+    CGFloat blue = normalizedDistance <= 0.5 ? fB * 2 * normalizedDistance : fB * 2 * (1 -normalizedDistance);
+    CGFloat green = normalizedDistance <= 0.5 ? fG * 2 * normalizedDistance : fG * 2 * (1 -normalizedDistance);
+    
+    UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:1];
     
 //    NSLog(@"========%f=========",normalizedDistance);
     
@@ -838,8 +863,64 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 @implementation LIXScrollTopBarContentFlowLayout
 
+- (void)prepareLayout {
+    CGRect visibleRect = CGRectMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y, CGRectGetWidth(self.collectionView.bounds), CGRectGetHeight(self.collectionView.bounds));
+    NSArray *arr = [self layoutAttributesForElementsInRect:visibleRect];
+    for(UICollectionViewLayoutAttributes *attributes in arr) {
+        attributes.transform3D = CATransform3DIdentity;
+    }
+}
 
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    
+    NSArray *attributesArr = [super layoutAttributesForElementsInRect:rect];
+    
+    CGRect visibleRect = CGRectMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y, CGRectGetWidth(self.collectionView.bounds), CGRectGetHeight(self.collectionView.bounds));
+    
+    for (UICollectionViewLayoutAttributes *attributes in attributesArr) {
+        [self applyLayoutAttributes:attributes forRect:visibleRect];
+    }
+    
+    return attributesArr;
+}
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForItemAtIndexPath:indexPath];
+    
+    CGRect visibleRect = CGRectMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y, CGRectGetWidth(self.collectionView.bounds), CGRectGetHeight(self.collectionView.bounds));
+    
+    [self applyLayoutAttributes:attributes forRect:visibleRect];
+    
+    return attributes;
+}
 
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes forRect:(CGRect)rect {
+    
+    CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+    CGFloat distanceToCenter = layoutAttributes.center.x - center.x;
+    NSLog(@"attributes %@=======disatanceTo center : %f",layoutAttributes, distanceToCenter);
+    if (self.transformStyle == LIXScrollTopBarContentTransformStyle_solid) {
+        CGFloat angle;
+        if (distanceToCenter > 0) {
+            angle = distanceToCenter / (self.collectionView.frame.size.width / 2) * M_PI_4;
+        }
+        else {
+            angle = - distanceToCenter / (self.collectionView.frame.size.width / 2) * M_PI_4;
+        }
+        
+        //    CATransform3D perspective = CATransform3DIdentity;
+        //    perspective.m34 = -1.0 / 500.0;
+        //    perspective = CATransform3DRotate(perspective, - M_PI_4, 1, 0, 0);
+        //    layoutAttributes.transform3D = perspective;
+        
+        CATransform3D transfrom = CATransform3DIdentity;
+        transfrom.m34 = -1.0 / 1000;
+        transfrom = CATransform3DRotate(transfrom, angle, 0, 1, 0);
+        
+        layoutAttributes.transform3D = transfrom;
+    }
+    
+}
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
     CGFloat xOffset = 0;

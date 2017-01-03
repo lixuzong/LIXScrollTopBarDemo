@@ -21,7 +21,7 @@
 - (void)loadView {
     
     LIXScrollTopBarView *scrollTopBar = [[LIXScrollTopBarView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    scrollTopBar.scrollTitleType =  LIXScrollTopBarType_gradient | LIXScrollTopBarType_transform;
+    scrollTopBar.scrollTitleType =  LIXScrollTopBarType_gradient;
     scrollTopBar.selectedTitleStyle = LIXScrollTopBarTitleSelectedStyle_spring;
     scrollTopBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
