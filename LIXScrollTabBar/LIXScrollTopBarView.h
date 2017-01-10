@@ -20,9 +20,14 @@ typedef NS_ENUM(NSUInteger, LIXScrollTopBarContentTransformStyle) {
 typedef NS_ENUM(NSUInteger, LIXScrollTopBarType) {
     LIXScrollTopBarType_default = 1 ,
     LIXScrollTopBarType_gradient = 1 << 1,
-    LIXScrollTopBarType_transform = 1 << 2
+    LIXScrollTopBarType_transform = 1 << 2,
+    LIXScrollTopBarType_fontSize = 1 << 3
 };
 
+typedef NS_ENUM(NSUInteger, LIXScrollTopBarContentScrollStyle) {
+    LIXScrollTopBarContentScrollStyle_default,
+    LIXScrollTopBarContentScrollStyle_dynamic
+};
 
 
 @protocol LIXScrollTopBarViewDataSource;
@@ -33,7 +38,9 @@ typedef NS_ENUM(NSUInteger, LIXScrollTopBarType) {
 
 @property (nonatomic, assign) LIXScrollTopBarType scrollTitleType;
 @property (nonatomic, assign) LIXScrollTopBarTitleSelectedStyle selectedTitleStyle;
+@property (nonatomic, assign) BOOL showTitleBaseLine;
 @property (nonatomic, assign) LIXScrollTopBarContentTransformStyle transformStyle;
+@property (nonatomic, assign) LIXScrollTopBarContentScrollStyle contentCellScrollStyle;
 @property (nonatomic, weak) id<LIXScrollTopBarViewDataSource> dataSource;
 @property (nonatomic, weak) id<LIXScrollTopBarViewDelegate> delegate;
 
