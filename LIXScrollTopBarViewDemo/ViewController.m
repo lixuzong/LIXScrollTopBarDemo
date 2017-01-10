@@ -26,7 +26,7 @@
     
     scrollTopBar.scrollTitleType =  LIXScrollTopBarType_fontSize | LIXScrollTopBarType_gradient | LIXScrollTopBarType_transform;
     scrollTopBar.selectedTitleStyle = LIXScrollTopBarTitleSelectedStyle_spring;
-    scrollTopBar.contentCellScrollStyle = LIXScrollTopBarContentScrollStyle_dynamic;
+//    scrollTopBar.contentCellScrollStyle = LIXScrollTopBarContentScrollStyle_dynamic;
     
     scrollTopBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
@@ -95,19 +95,19 @@
 
 - (void)scrollTopBar:(LIXScrollTopBarView *)scrollTopBar willScrollToIndex:(NSInteger)index {
     
-    NSLog(@"=======scrollTopBarwillScrollToIndex: %ld",(long)index);
+//    NSLog(@"=======scrollTopBarwillScrollToIndex: %ld",(long)index);
 }
 - (void)scrollTopBar:(LIXScrollTopBarView *)scrollTopBar didScrollToIndex:(NSInteger)index {
     
-    NSLog(@"=======scrollTopBarDidScrollToIndex: %ld",(long)index);
+//    NSLog(@"=======scrollTopBarDidScrollToIndex: %ld",(long)index);
 }
 - (void)scrollTopBar:(LIXScrollTopBarView *)scrollTopBar didSelectedTitleIndex:(NSInteger)index {
     
-    NSLog(@"=======scrollTopBardidSelectedTitleIndex: %ld",(long)index);
+//    NSLog(@"=======scrollTopBardidSelectedTitleIndex: %ld",(long)index);
 }
 - (void)scrollTopBar:(LIXScrollTopBarView *)scrollTopBar didSelectedContentItemIndex:(NSIndexPath *)indexPath inContainerView:(UICollectionView *)containerView{
     
-    NSLog(@"=======scrollTopBardidSelectedContentItemIndex: %ld ==%ld",(long)indexPath.section,(long)indexPath.row);
+//    NSLog(@"=======scrollTopBardidSelectedContentItemIndex: %ld ==%ld",(long)indexPath.section,(long)indexPath.row);
 }
 
 @end

@@ -176,29 +176,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 - (void)setupView {
     
     [self addSubview:self.topBarCollectionView];
-//    [_topBarCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self);
-//        make.right.equalTo(self);
-//        make.top.equalTo(self);
-//        make.height.mas_equalTo(self.topBarHeight);
-//    }];
-//    [NSLayoutConstraint constraintWithItem:self.topBarCollectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
-//    [NSLayoutConstraint constraintWithItem:self.topBarCollectionView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0];
-//    [NSLayoutConstraint constraintWithItem:self.topBarCollectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:0];
-//    [NSLayoutConstraint constraintWithItem:self.topBarCollectionView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.topBarHeight];
-    
     [self addSubview:self.contentCollectionView];
-//    [_contentCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self);
-//        make.right.equalTo(self);
-//        make.top.equalTo(_topBarCollectionView.mas_bottom);
-//        make.bottom.equalTo(self);
-//    }];
-//    
-//    [NSLayoutConstraint constraintWithItem:self.contentCollectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
-//    [NSLayoutConstraint constraintWithItem:self.contentCollectionView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0];
-//    [NSLayoutConstraint constraintWithItem:self.contentCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-//    [NSLayoutConstraint constraintWithItem:self.contentCollectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topBarCollectionView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
 }
 
 - (void)setupNotification {
@@ -210,6 +188,13 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     
     [self.contentCollectionView reloadData];
     [self.topBarCollectionView reloadData];
+    
+    //解决旋转之后contentSize不对应的问题,延迟为了让动画看起来不奇怪
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:self.currentIndex inSection:0];
+        [self.contentCollectionView scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    });
+    
 }
 
 
@@ -470,6 +455,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     }
     
     _draggingNextIndex = draggingNextIndex;
+    
     
     if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:willScrollToIndex:))) {
         [self.delegate scrollTopBar:self willScrollToIndex:draggingNextIndex];
@@ -808,8 +794,6 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     
     NSArray *layoutAttributesArray = [super layoutAttributesForElementsInRect:rect];
     
-//    CGRect visibleRect = CGRectMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y, CGRectGetWidth(self.collectionView.bounds), CGRectGetHeight(self.collectionView.bounds));
-    
     for (UICollectionViewLayoutAttributes *attributes in layoutAttributesArray) {
         
         if(CGRectIntersectsRect(attributes.frame, rect)) {
@@ -901,10 +885,6 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         attributes.transform = affineTransform;
     }
     [(LIXScrollTopBarTitleCellLayoutAttributes *)attributes setTextColor:color];
-    //[(LIXScrollTopBarTitleCellLayoutAttributes *)attributes setFontSize:fontSize];
-    
-//    NSLog(@"color:%@===distance:%f",color,normalizedDistance);
-//    [(LIXScrollTopBarTitleCellLayoutAttributes *)attributes setShouldRasterize:YES];
 }
 @end
 
@@ -945,7 +925,6 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     
     CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
     CGFloat distanceToCenter = layoutAttributes.center.x - center.x;
-    NSLog(@"attributes %@=======disatanceTo center : %f",layoutAttributes, distanceToCenter);
     if (self.transformStyle == LIXScrollTopBarContentTransformStyle_solid) {
         CGFloat angle;
         if (distanceToCenter > 0) {
@@ -954,11 +933,6 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         else {
             angle = - distanceToCenter / (self.collectionView.frame.size.width / 2) * M_PI_4;
         }
-        
-        //    CATransform3D perspective = CATransform3DIdentity;
-        //    perspective.m34 = -1.0 / 500.0;
-        //    perspective = CATransform3DRotate(perspective, - M_PI_4, 1, 0, 0);
-        //    layoutAttributes.transform3D = perspective;
         
         CATransform3D transfrom = CATransform3DIdentity;
         transfrom.m34 = -1.0 / 1000;
@@ -971,8 +945,8 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
     CGFloat xOffset = 0;
-    xOffset = self.currentIndexPath.row *
-    (CGRectGetWidth([UIScreen mainScreen].bounds));
+    CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
+    xOffset = self.currentIndexPath.row * screenWidth;
     return CGPointMake(xOffset, proposedContentOffset.y);
 }
 
