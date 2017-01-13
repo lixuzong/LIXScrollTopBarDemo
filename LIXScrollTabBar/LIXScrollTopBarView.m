@@ -826,21 +826,30 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     CGFloat normalizedDistance = MIN(1, ABS(distanceFromTargetRectToItem / attributes.size.width));
     
     //change color
-    CGColorRef fromcolor = [[UIColor redColor] CGColor];
-    size_t fromNumComponents = CGColorGetNumberOfComponents(fromcolor);
-    CGFloat fR, fG = 0.0, fB = 0.0;
-    if (fromNumComponents == 4) {
-        const CGFloat *components = CGColorGetComponents(fromcolor);
-        fR = components[0];
-        fG = components[1];
-        fB = components[2];
-    }
+// this is the rgb method,it is not good enough
+//    CGColorRef fromcolor = [[UIColor redColor] CGColor];
+//    size_t fromNumComponents = CGColorGetNumberOfComponents(fromcolor);
+//    CGFloat fR, fG = 0.0, fB = 0.0;
+//    if (fromNumComponents == 4) {
+//        const CGFloat *components = CGColorGetComponents(fromcolor);
+//        fR = components[0];
+//        fG = components[1];
+//        fB = components[2];
+//    }
     
-    CGFloat red = fR * (1 - normalizedDistance);
-    CGFloat blue = normalizedDistance <= 0.5 ? fB * 2 * normalizedDistance : fB * 2 * (1 -normalizedDistance);
-    CGFloat green = normalizedDistance <= 0.5 ? fG * 2 * normalizedDistance : fG * 2 * (1 -normalizedDistance);
+//    CGFloat red = fR * (1 - normalizedDistance);
+//    CGFloat blue = normalizedDistance <= 0.5 ? fB * 2 * normalizedDistance : fB * 2 * (1 -normalizedDistance);
+//    CGFloat green = normalizedDistance <= 0.5 ? fG * 2 * normalizedDistance : fG * 2 * (1 -normalizedDistance);
+//    
+//    UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:1];
     
-    UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:1];
+    //this is the HSL method , this is simple!
+    
+    CGColorRef selectedColor = [[UIColor redColor] CGColor];
+    size_t selectedNumConponents = CGColorGetNumberOfComponents(selectedColor);
+    
+    
+    UIColor *color = [UIColor colorWithHue:1 saturation:1 brightness:(1 - normalizedDistance) alpha:1];
     
     // change transform
     CATransform3D transform = CATransform3DIdentity;
