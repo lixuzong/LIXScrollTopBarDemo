@@ -6,11 +6,194 @@
 
 #import "LIXScrollTopBarView.h"
 
+@interface LIXScrollTopBarViewDataSourceModel : NSObject
+
+@property (nonatomic, strong) NSString *titleName;
+@property (nonatomic, assign) CGSize titleSize;
+@property (nonatomic, assign) CGSize baselineSize;
+@property (nonatomic, assign) CGPoint contentOffset;
+@property (nonatomic, strong) NSArray *contentItemCellClasses;
+@property (nonatomic, strong) id data;
+
+@end
+
+@implementation LIXScrollTopBarViewDataSourceModel
+
+@end
+
+@interface LIXScrollTopBarViewDataSource : NSObject
+
++ (LIXScrollTopBarViewDataSource *)shareInstance;
+@property (nonatomic, assign) NSUInteger currentIndex;
+@property (nonatomic, assign) NSUInteger pagesCount;
+
+- (void)clear;
+
+- (void)setTitleName:(NSString *)titleName forIndex:(NSInteger)index;
+- (NSString *)getTitleName:(NSInteger)index;
+- (void)setTitleSize:(CGSize)size forIndex:(NSUInteger)index;
+- (CGSize)getTitleSizeForIndex:(NSUInteger)index;
+- (void)setContentOffsetY:(CGPoint)offsetY forIndex:(NSUInteger)index;
+- (CGPoint)getContentOffsetYForIndex:(NSUInteger)index;
+- (void)setCurrentIndexContentOffsetY:(CGPoint)offsetY;
+- (CGPoint)getContentOffsetYForCurrentIndex;
+- (void)setData:(id)contentData forIndex:(NSUInteger)index;
+- (id)getDataForIndex:(NSUInteger)index;
+
+@property (nonatomic, strong) NSMutableDictionary *dataSource;
+
+@property (nonatomic, strong) NSString *pageItemClass;
+
+@end
+
+@implementation LIXScrollTopBarViewDataSource
+
+static LIXScrollTopBarViewDataSource *_instance = nil;
+
++ (instancetype)allocWithZone:(struct _NSZone *)zone {
+    
+    return [self shareInstance];
+}
+
++ (LIXScrollTopBarViewDataSource *)shareInstance {
+    
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[super allocWithZone:NULL] init];
+        _instance.dataSource = [NSMutableDictionary dictionary];
+    });
+    
+    return _instance;
+}
+
+- (void)clear {
+    _instance = nil;
+}
+
+- (void)setTopBarBottomLine:(CGSize)size forPage:(NSInteger)page {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:page];
+    model.baselineSize = size;
+}
+
+- (CGSize)getTopBarBottomLineSizeForPage:(NSUInteger)page {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:page];
+    return model.baselineSize;
+}
+
+- (void)setContentItemCellClasses:(NSArray *)classes forIndex:(NSInteger)index {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    model.contentItemCellClasses = classes;
+    
+}
+
+- (NSArray *)getContentItemCellClassesForIndex:(NSInteger)index {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    return model.contentItemCellClasses;
+}
+
+- (void)setTitleName:(NSString *)titleName forIndex:(NSInteger)index {
+    
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    model.titleName = titleName;
+}
+
+- (NSString *)getTitleName:(NSInteger)index {
+    
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    return model.titleName;
+}
+
+- (void)setTitleSize:(CGSize)size forIndex:(NSUInteger)index {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    model.titleSize = size;
+}
+
+- (CGSize)getTitleSizeForIndex:(NSUInteger)index {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    return model.titleSize;
+}
+
+- (void)setContentOffsetY:(CGPoint)offsetY forIndex:(NSUInteger)index {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    model.contentOffset = offsetY;
+}
+
+- (CGPoint)getContentOffsetYForIndex:(NSUInteger)index {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    return model.contentOffset;
+}
+
+- (void)setCurrentIndexContentOffsetY:(CGPoint)offsetY {
+    [self setContentOffsetY:offsetY forIndex:self.currentIndex];
+}
+
+- (CGPoint)getContentOffsetYForCurrentIndex {
+    return CGPointEqualToPoint([self getContentOffsetYForIndex:self.currentIndex], CGPointZero) ? [self getContentOffsetYForIndex:self.currentIndex] : CGPointZero;
+}
+
+- (void)setData:(id)contentData forIndex:(NSUInteger)index {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    model.data = contentData;
+}
+
+- (id)getDataForIndex:(NSUInteger)index {
+    LIXScrollTopBarViewDataSourceModel *model = [self getContentDataForIndex:index];
+    return model.data;
+}
+
+- (LIXScrollTopBarViewDataSourceModel *)getContentDataForIndex:(NSInteger)index {
+    
+    LIXScrollTopBarViewDataSourceModel *model = [self.dataSource objectForKey:@(index)];
+    if (!model) {
+        model = [[LIXScrollTopBarViewDataSourceModel alloc] init];
+        [self.dataSource setObject:model forKey:@(index)];
+    }
+    
+    return model;
+}
+
+@end
+
 static NSString *const kTitleCellIdentifier = @"LIXScrollTopBarTitleCell";
 static NSString *const kContentCellIdentifier = @"LIXScrollTopBarContentCell";
 static NSString *const kContentItemCellIdentifier = @"kContentItemCellIdentifier";
 static CGFloat const kDefaultTopBarHeight = 60;
 static CGFloat const kDefatultTopBarCellWidth = 80;
+
+
+@interface LIXScrollTopBarTitleBarView : UIView
+
+@property (nonatomic, strong) UIView *colorView;
+
+- (void)updateSize:(CGSize)size;
+- (void)updateColor:(UIColor *)color;
+
+@end
+
+@implementation LIXScrollTopBarTitleBarView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (!(self = [super initWithFrame:frame])) return nil;
+    
+    self.backgroundColor = [UIColor clearColor];
+    
+    self.colorView = [[UIView alloc] initWithFrame:self.bounds];
+    self.colorView.backgroundColor = [UIColor redColor];
+    [self addSubview:self.colorView];
+    
+    return self;
+}
+
+- (void)updateSize:(CGSize)size {
+    self.colorView.bounds = CGRectMake(0, 0, size.width, size.height);
+}
+
+- (void)updateColor:(UIColor *)color {
+    self.colorView.backgroundColor = color;
+}
+
+@end
 
 BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     if (delegate && [delegate respondsToSelector:selector]) {
@@ -23,9 +206,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 @required
 
-- (NSInteger)numberOfSectionInContentCollectionView:(UICollectionView *)contentCollectionView;
-- (NSInteger)contentCollectionView:(UICollectionView *)contentCollectionView numberOfItemsInSection:(NSInteger)section;
-- (void)didSelectedContentItem:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
+- (void)didSelectedContentItem:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath inPage:(NSUInteger)index;
 
 @end
 
@@ -40,7 +221,8 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 @interface LIXSCrollTopBarCell : UICollectionViewCell
 
-- (void)updateWithModel:(id)model;
+- (void)updateWithModel:(id)model forIndex:(NSUInteger)index;
+- (void)updateContentYForIndex:(NSUInteger)index;
 
 @property (nonatomic, strong) NSString *cellClassName;
 @property (nonatomic, assign) LIXScrollTopBarContentScrollStyle scrollStyle;
@@ -51,7 +233,8 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 @implementation LIXSCrollTopBarCell
 
-- (void)updateWithModel:(id)model {};
+- (void)updateWithModel:(id)model forIndex:(NSUInteger)index {}
+- (void)updateContentYForIndex:(NSUInteger)index{}
 
 @end
 
@@ -62,7 +245,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 @end
 
-@interface LIXScrollTopBarContentCell : LIXSCrollTopBarCell
+@interface LIXScrollTopBarContentCell : LIXSCrollTopBarCell<LIXScrollTopBarItemProtocol>
 
 @property (nonatomic, strong) UILabel *contentLabel;
 
@@ -101,9 +284,9 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 @interface LIXScrollTopBarView ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,LIXScrollTopBarViewContentCellDataSource>
 
 //data source
-@property (nonatomic, strong) NSArray *tDataSource;//数据源
+@property (nonatomic, strong) NSMutableArray *tDataSource;//数据源
 
-@property (nonatomic, strong) UIView *topBarbaseLine;//下划线
+@property (nonatomic, strong) LIXScrollTopBarTitleBarView *topBarbaseLine;//下划线
 @property (nonatomic, assign) CGSize baseLineSize;//topBar下划线size
 @property (nonatomic, strong) UIColor *baseLineColor;//topBar下划线颜色
 
@@ -141,18 +324,17 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if(!(self = [super initWithFrame:frame])) return nil;
-    
-    self.showTitleBaseLine = YES;
+    self.backgroundColor = [UIColor whiteColor];
     
     //config data
     self.topBarHeight = _topBarHeight?: kDefaultTopBarHeight;
-    self.baseLineSize = CGSizeMake(80, 2);
     self.topBarTitleCellSize = CGSizeMake(kDefatultTopBarCellWidth, kDefaultTopBarHeight);
-    self.backgroundColor = [UIColor redColor];
+    self.baseLineSize = CGSizeMake(80, 2);
     
-    [self setupTestData];
+    self.canScrollPage = YES;
+    self.currentIndex = 0;
     
-    [self setupView];
+    
     
     [self setupNotification];
     
@@ -172,6 +354,67 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 }
 
 #pragma mark - private method
+
+- (void)configData {
+    
+    if (validateDelegateWithSelector(self.dataSource,@selector(scrollTopBar:pageItemCellForPage:forIndexPath:))) {
+        if (validateDelegateWithSelector(self.dataSource, @selector(numberOfPagesInScrollTopBar:))) {
+            NSInteger pagesCount = [self.dataSource numberOfPagesInScrollTopBar:self];
+            [LIXScrollTopBarViewDataSource shareInstance].pagesCount = pagesCount;
+            
+            for (int page = 0; page < pagesCount; page ++) {
+                if (validateDelegateWithSelector(self.dataSource, @selector(numberOfScetionsInPage:))) {
+                    
+                    NSUInteger sectionsCount = [self.dataSource numberOfScetionsInPage:page];
+                    
+                    NSMutableArray *sectionArr = [NSMutableArray arrayWithCapacity:sectionsCount];
+                    
+                    for (int section = 0; section < sectionsCount; section ++) {
+                        
+                        //                        NSMutableDictionary *sectionDic = [NSMutableDictionary dictionary];
+                        if (validateDelegateWithSelector(self.dataSource, @selector(numberOfItemsAtPageIndex:forSection:))) {
+                            
+                            NSUInteger itemsCount = [self.dataSource numberOfItemsAtPageIndex:page forSection:section];
+                            
+                            NSMutableArray *itemArray = [NSMutableArray arrayWithCapacity:itemsCount];
+                            for (int item = 0; item < itemsCount; item ++) {
+                                
+                                
+                                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
+                                
+                                Class cellClass = [[self.dataSource scrollTopBar:self pageItemCellForPage:page forIndexPath:indexPath] class];
+                                id data = [self.dataSource scrollTopBar:self pageItemDataForPage:page forIndexPath:indexPath];
+                                
+                                NSDictionary *dic = @{
+                                                      @"className":NSStringFromClass(cellClass),
+                                                      @"data":data
+                                                      };
+                                
+                                [itemArray addObject:dic];
+                            }
+                            
+                            //                            [sectionDic setObject:itemArray forKey:@(section)];
+                            [sectionArr addObject:itemArray];
+                        }
+                        
+                    }
+                    [[LIXScrollTopBarViewDataSource shareInstance] setContentItemCellClasses:sectionArr forIndex:page];
+                    if (validateDelegateWithSelector(self.dataSource, @selector(scrollTopBar: sizeForTitleBarBottomLineInpage:)))                    {
+                        CGSize baselineSize = [self.dataSource scrollTopBar:self sizeForTitleBarBottomLineInpage:page];
+                        [[LIXScrollTopBarViewDataSource shareInstance] setTopBarBottomLine:baselineSize forPage:page];
+                    }
+                    
+                }
+            }
+        }
+    }
+
+}
+
+- (void)registerPageItemClass:(Class)className {
+    NSString *class = NSStringFromClass(className);
+    [[LIXScrollTopBarViewDataSource shareInstance] setPageItemClass:class];
+}
 
 - (void)setupView {
     
@@ -193,6 +436,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:self.currentIndex inSection:0];
         [self.contentCollectionView scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+        [self.topBarCollectionView scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     });
     
 }
@@ -216,27 +460,9 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 #pragma mark - LIXScrollViewContentCellDataSource
 
-- (NSInteger)numberOfSectionInContentCollectionView:(UICollectionView *)contentCollectionView {
-    
-    if (self.dataSource && [self.dataSource respondsToSelector:@selector(numberScetionsInContentView:)]) {
-        return [self.dataSource numberScetionsInContentView:contentCollectionView];
-    }
-    
-    return 0;
-}
-
-- (NSInteger)contentCollectionView:(UICollectionView *)contentCollectionView numberOfItemsInSection:(NSInteger)section {
-    if (self.dataSource && [self.dataSource respondsToSelector:@selector(numberOfItemsInContentView:atIndex:)]) {
-        
-        return [self.dataSource numberOfItemsInContentView:contentCollectionView atIndex:self.currentIndex];
-    }
-    
-    return 0;
-}
-
-- (void)didSelectedContentItem:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
-    if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didSelectedContentItemIndex:inContainerView:))) {
-        [self.delegate scrollTopBar:self didSelectedContentItemIndex:indexPath inContainerView:collectionView];
+- (void)didSelectedContentItem:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath inPage:(NSUInteger)index{
+    if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didSelectedContentItemIndex:inPage:))) {
+        [self.delegate scrollTopBar:self didSelectedContentItemIndex:indexPath inPage:index];
     }
 }
 
@@ -244,11 +470,11 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    if (self.dataSource && [self.dataSource respondsToSelector:@selector(numberOfItemsInScrollTopBar:)]) {
+    if (validateDelegateWithSelector(self.dataSource, @selector(numberOfPagesInScrollTopBar:))) {
         
-        //NSLog(@"======mainCollectionViewItemsCount : %ld",(long)[self.dataSource numberOfItemsInScrollTopBar:self]);
+        NSInteger count = [self.dataSource numberOfPagesInScrollTopBar:self];
         
-       return [self.dataSource numberOfItemsInScrollTopBar:self];
+       return count;
     }
     
     return 0;
@@ -263,20 +489,27 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         cellIdentifier = kTitleCellIdentifier;
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         model = [self.dataSource scrollTopBar:self titleDataForItem:cell atIndex:indexPath.row];
+        [[LIXScrollTopBarViewDataSource shareInstance] setTitleName:model forIndex:indexPath.row];
+        UIFont *font = [UIFont systemFontOfSize:16];
+        CGSize fontSize = [model[@"title"] sizeWithAttributes:@{NSFontAttributeName:font}];
+        [[LIXScrollTopBarViewDataSource shareInstance] setTitleSize:fontSize forIndex:indexPath.row];
     }
     else {
         cellIdentifier = kContentCellIdentifier;
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-        model = [self.dataSource scrollTopBar:self contentItemDataForItem:cell atIndexPath:indexPath];
+        
+        [[LIXScrollTopBarViewDataSource shareInstance] setData:model forIndex:indexPath.row];
         cell.dataSource = self;
         cell.cellClassName = @"UICollectionViewCell";
         cell.scrollStyle = self.contentCellScrollStyle;
     }
 
-    [cell updateWithModel:model];
+    [cell updateWithModel:model forIndex:indexPath.row];
     
     return cell;
 }
+
+
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -291,6 +524,18 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     return cellSize;
 }
 
+
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+//    
+//    if (collectionView == self.topBarCollectionView) {
+//        if (validateDelegateWithSelector(self.dataSource, @selector(scrollTopBar:titleContainerView:layout:insertForSectionAtIndex:))) {
+//            
+//            return [self.dataSource scrollTopBar:self titleContainerView:collectionView layout:collectionViewLayout insertForSectionAtIndex:section];
+//        }
+//    }
+//    
+//    return [(UICollectionViewFlowLayout *)collectionViewLayout sectionInset];
+//}
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -330,7 +575,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         self.isScrolling = YES;
         self.isDragging = NO;
         
-        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
         [self.contentCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         self.currentIndex = indexPath.row;
     }
@@ -362,20 +607,19 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
         self.topBarFlowLayout.targetRect = self.topBarbaseLine.frame;
         
-        CGPoint originToTitleView = [self convertPoint:self.topBarbaseLine.frame.origin fromView:self.topBarCollectionView];
         
-        if (originToTitleView.x + CGRectGetWidth(_topBarbaseLine.bounds) > CGRectGetMaxX(self.frame)
-            || originToTitleView.x < CGRectGetMinX(self.frame)) {
+        //当滑动contentView的时候始终漏出下划线
+        if(self.isDragging) {
+            CGPoint originToTitleView = [self convertPoint:self.topBarbaseLine.frame.origin fromView:self.topBarCollectionView];
             
-            [self.topBarCollectionView scrollRectToVisible:self.topBarbaseLine.frame animated:NO];
+            if (originToTitleView.x + CGRectGetWidth(_topBarbaseLine.bounds) > CGRectGetMaxX(self.topBarCollectionView.frame)
+                || originToTitleView.x < CGRectGetMinX(self.topBarCollectionView.frame)) {
+                
+                [self.topBarCollectionView scrollRectToVisible:self.topBarbaseLine.frame animated:NO];
+            }
         }
         
-        self.attributesArray = [self.topBarFlowLayout layoutAttributesForElementsInRect:CGRectMake(0, 0, self.topBarCollectionView.contentSize.width, self.topBarCollectionView.contentSize.height)];
-        for (UICollectionViewLayoutAttributes *attributes in self.attributesArray) {
-            
-            LIXScrollTopBarTitleCell *cell = (LIXScrollTopBarTitleCell *)[self.topBarCollectionView cellForItemAtIndexPath:attributes.indexPath];
-            [cell applyLayoutAttributes:attributes];
-        }
+       
         
         //计算willscrollto的index
         CGPoint point = isLeft ? CGPointMake(CGRectGetMinX(self.topBarbaseLine.frame) + 10, 0) : CGPointMake(CGRectGetMaxX(self.topBarbaseLine.frame) - 10, 0);
@@ -393,6 +637,37 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
             }
         }
     }
+    
+    //update topbarTitleCell attributes
+    self.attributesArray = [self.topBarFlowLayout layoutAttributesForElementsInRect:CGRectMake(0, 0, self.topBarCollectionView.contentSize.width, self.topBarCollectionView.contentSize.height)];
+    for (UICollectionViewLayoutAttributes *attributes in self.attributesArray) {
+        
+        LIXScrollTopBarTitleCell *cell = (LIXScrollTopBarTitleCell *)[self.topBarCollectionView cellForItemAtIndexPath:attributes.indexPath];
+        [cell applyLayoutAttributes:attributes];
+    }
+}
+
+- (void)didScrollToPage {
+    
+    NSIndexPath *indexPath = [self.topBarCollectionView indexPathForItemAtPoint:self.topBarbaseLine.center];
+    LIXSCrollTopBarCell *cell = (LIXSCrollTopBarCell *)[self.contentCollectionView cellForItemAtIndexPath:indexPath];
+    [cell updateContentYForIndex:indexPath.row];
+    self.currentIndex = indexPath.row;
+    
+    CGSize baselineSize = [[LIXScrollTopBarViewDataSource shareInstance] getTopBarBottomLineSizeForPage:indexPath.row];
+    [UIView animateWithDuration:0.25
+                          delay:0
+         usingSpringWithDamping:0.5
+          initialSpringVelocity:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.baseLineSize = baselineSize;
+                     }
+                     completion:nil];
+    
+    if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didScrollToIndex:))) {
+        [self.delegate scrollTopBar:self didScrollToIndex:indexPath.row];
+    }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -400,10 +675,17 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     if (scrollView == self.contentCollectionView) {
         self.isScrolling = NO;
         
-        NSIndexPath *indexPath = [self.topBarCollectionView indexPathForItemAtPoint:self.topBarbaseLine.center];
-        if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didScrollToIndex:))) {
-            [self.delegate scrollTopBar:self didScrollToIndex:indexPath.row];
-        }
+//        NSIndexPath *indexPath = [self.topBarCollectionView indexPathForItemAtPoint:self.topBarbaseLine.center];
+//        LIXSCrollTopBarCell *cell = (LIXSCrollTopBarCell *)[self.contentCollectionView cellForItemAtIndexPath:indexPath];
+//        [cell updateContentYForIndex:indexPath.row];
+//        
+//        CGSize baselineSize = [[LIXScrollTopBarViewDataSource shareInstance] getTitleSizeForIndex:indexPath.row];
+//        
+//        if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didScrollToIndex:))) {
+//            [self.delegate scrollTopBar:self didScrollToIndex:indexPath.row];
+//        }
+        
+        [self didScrollToPage];
     }
 }
 
@@ -412,25 +694,46 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     if (scrollView == self.contentCollectionView) {
         self.isDragging = NO;
         
-        NSIndexPath *indexPath = [self.topBarCollectionView indexPathForItemAtPoint:CGPointMake(CGRectGetMidX(self.topBarbaseLine.frame), 0)];
-        self.currentIndex = indexPath.row;
-        
-        if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didScrollToIndex:))) {
-            [self.delegate scrollTopBar:self didScrollToIndex:indexPath.row];
-        }
+//        NSIndexPath *indexPath = [self.topBarCollectionView indexPathForItemAtPoint:CGPointMake(CGRectGetMidX(self.topBarbaseLine.frame), 0)];
+//        self.currentIndex = indexPath.row;
+//        
+//        if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:didScrollToIndex:))) {
+//            [self.delegate scrollTopBar:self didScrollToIndex:indexPath.row];
+//        }
+        [self didScrollToPage];
     }
     
 }
 
 #pragma mark - get & set method
 
-- (void)setShowTitleBaseLine:(BOOL)showTitleBaseLine {
-    self.baseLineColor = showTitleBaseLine ? [UIColor redColor] : [UIColor clearColor];
+- (void)setDataSource:(id<LIXScrollTopBarViewDataSource>)dataSource {
+    _dataSource = dataSource;
     
-    _showTitleBaseLine = showTitleBaseLine;
+    [self configData];
+    [self setupView];
+}
+
+- (void)setTitleBarEdgeInsets:(UIEdgeInsets)titleBarEdgeInsets {
+    self.topBarCollectionView.frame = CGRectMake(titleBarEdgeInsets.left, titleBarEdgeInsets.top
+                                                 , CGRectGetWidth(self.topBarCollectionView.frame) - (titleBarEdgeInsets.left + titleBarEdgeInsets.right), self.topBarHeight);
+}
+
+- (void)setCanScrollPage:(BOOL)canScrollPage {
+    if (!canScrollPage) {
+        self.contentCollectionView.scrollEnabled = NO;
+    }
+    _canScrollPage = canScrollPage;
+}
+
+- (void)setHideTitleBaseLine:(BOOL)hideTitleBaseLine {
+  
+    [_topBarbaseLine updateColor:(hideTitleBaseLine ? [UIColor clearColor] : [UIColor redColor])];
+    _hideTitleBaseLine = hideTitleBaseLine;
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex {
+    [LIXScrollTopBarViewDataSource shareInstance].currentIndex = currentIndex;
     self.contentFlowLayout.currentIndexPath = [NSIndexPath indexPathForItem:currentIndex inSection:0];
 }
 
@@ -456,6 +759,9 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     
     _draggingNextIndex = draggingNextIndex;
     
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:draggingNextIndex inSection:0];
+    LIXSCrollTopBarCell *cell = (LIXSCrollTopBarCell *)[self.contentCollectionView cellForItemAtIndexPath:indexPath];
+    [cell updateContentYForIndex:draggingNextIndex];
     
     if (validateDelegateWithSelector(self.delegate, @selector(scrollTopBar:willScrollToIndex:))) {
         [self.delegate scrollTopBar:self willScrollToIndex:draggingNextIndex];
@@ -472,12 +778,15 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 - (UIView *)topBarbaseLine {
     if(_topBarbaseLine) return _topBarbaseLine;
     
-    _topBarbaseLine = ({
-       
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, self.topBarHeight - self.baseLineSize.height, self.baseLineSize.width, self.baseLineSize.height)];
-        line.backgroundColor = self.baseLineColor;
-        line;
-    });
+    _topBarbaseLine = [[LIXScrollTopBarTitleBarView alloc] initWithFrame:CGRectMake(0, self.topBarHeight - self.baseLineSize.height, self.baseLineSize.width, self.baseLineSize.height)];
+    
+    [_topBarbaseLine updateColor:_baseLineColor ?: [UIColor redColor]];
+//    _topBarbaseLine = ({
+//       
+//        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, self.topBarHeight - self.baseLineSize.height, self.baseLineSize.width, self.baseLineSize.height)];
+//        line.backgroundColor = self.baseLineColor;
+//        line;
+//    });
     
     return _topBarbaseLine;
 }
@@ -487,14 +796,16 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     _baseLineColor = baseLineColor;
     
     if (_topBarbaseLine) {
-        self.topBarbaseLine.backgroundColor = baseLineColor;
+        [self.topBarbaseLine updateColor:baseLineColor];
     }
 }
 
 - (void)setBaseLineSize:(CGSize)baseLineSize {
     
     _baseLineSize = baseLineSize;
-    self.topBarbaseLine.frame = CGRectMake(self.topBarbaseLine.frame.origin.x, self.topBarbaseLine.frame.origin.y, baseLineSize.width, baseLineSize.height);
+    [self.topBarbaseLine updateSize:baseLineSize];
+//    self.topBarbaseLine.bounds = CGRectMake(0, 0, baseLineSize.width, baseLineSize.height);
+//    self.topBarbaseLine.frame = CGRectMake(self.topBarbaseLine.frame.origin.x + (CGRectGetWidth(self.topBarbaseLine.frame)- baseLineSize.width) / 2, self.topBarbaseLine.frame.origin.y, baseLineSize.width, baseLineSize.height);
 }
 
 - (UICollectionView *)topBarCollectionView {
@@ -507,9 +818,11 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.topBarHeight) collectionViewLayout:_topBarFlowLayout];
         
-        collectionView.backgroundColor = [UIColor yellowColor];
+        collectionView.backgroundColor = [UIColor whiteColor];
         collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         collectionView.translatesAutoresizingMaskIntoConstraints = YES;
+        collectionView.showsVerticalScrollIndicator = NO;
+        collectionView.showsHorizontalScrollIndicator = NO;
         
         collectionView.backgroundColor = [UIColor whiteColor];
         collectionView.delegate = self;
@@ -537,17 +850,21 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         _contentFlowLayout.minimumInteritemSpacing = 0;
         _contentFlowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, self.topBarHeight, self.bounds.size.width, self.bounds.size.height - self.topBarHeight) collectionViewLayout:_contentFlowLayout];
+        collectionView.backgroundColor = [UIColor whiteColor];
         
+        collectionView.showsVerticalScrollIndicator = NO;
+        collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.backgroundColor = [UIColor lightGrayColor];
         
         collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         collectionView.translatesAutoresizingMaskIntoConstraints = YES;
         
+        [collectionView registerClass:[LIXScrollTopBarContentCell class] forCellWithReuseIdentifier:kContentCellIdentifier];
+        
         collectionView.backgroundColor = [UIColor whiteColor];
         collectionView.pagingEnabled = YES;
         collectionView.delegate = self;
         collectionView.dataSource = self;
-        [collectionView registerClass:[LIXScrollTopBarContentCell class] forCellWithReuseIdentifier:kContentCellIdentifier];
         collectionView;
     });
     
@@ -569,6 +886,8 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 - (instancetype)initWithFrame:(CGRect)frame {
     if(!(self = [super initWithFrame:frame])) return nil;
     
+//    self.backgroundColor = [UIColor yellowColor];
+    
     self.titleLabel = ({
         UILabel *label = [[UILabel alloc] initWithFrame:self.contentView.bounds];
         label.font = [UIFont systemFontOfSize:16];
@@ -586,10 +905,9 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     
     self.titleLabel.text = @"";
     self.titleLabel.textColor = [UIColor blackColor];
-    self.titleLabel.font = [UIFont systemFontOfSize:14];
 }
 
-- (void)updateWithModel:(id)model {
+- (void)updateWithModel:(id)model forIndex:(NSUInteger)index {
     
     self.titleLabel.text = [model valueForKey:@"title"];
 }
@@ -598,9 +916,10 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     [super applyLayoutAttributes:layoutAttributes];
     
     self.titleLabel.textColor = [layoutAttributes valueForKey:@"textColor"];
-//    NSLog(@"indexPath:%ld========color:%@",(long)layoutAttributes.indexPath.row, self.titleLabel.textColor);
-    self.layer.shouldRasterize = [layoutAttributes valueForKey:@"shouldRasterize"];
-    //CGFloat fontSize = [(LIXScrollTopBarTitleCellLayoutAttributes*)layoutAttributes fontSize];
+
+    //使用shouldRasterize会导致label文字模糊
+//    self.layer.shouldRasterize = [layoutAttributes valueForKey:@"shouldRasterize"];
+    
     CGFloat fontSize = 16 * [(LIXScrollTopBarTitleCellLayoutAttributes *)layoutAttributes fontScale];
     self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
     self.layer.affineTransform = layoutAttributes.transform;
@@ -614,6 +933,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) id model;
+@property (nonatomic, assign) NSUInteger currentIndex;
 
 @end
 
@@ -630,7 +950,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         label;
     });
     
-    self.backgroundColor = [UIColor grayColor];
+//    self.backgroundColor = [UIColor grayColor];
     [self.contentView addSubview:_contentLabel];
     
     return self;
@@ -641,9 +961,20 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     self.contentLabel.text = @"";
 }
 
-- (void)updateWithModel:(id)model {
+#pragma - mark item protocol
+- (void)updateWithData:(id)data {
     
-    self.model = model;
+}
+
+- (void)updateContentYForIndex:(NSUInteger)index {
+    self.collectionView.contentOffset = [[LIXScrollTopBarViewDataSource shareInstance] getContentOffsetYForIndex:index];
+    
+//    NSLog(@"========[currentIndex:%lul, contentOffsety:%f]=========",(unsigned long)index, self.collectionView.contentOffset.y);
+}
+
+- (void)updateWithModel:(id)model forIndex:(NSUInteger)index{
+    
+    self.currentIndex = index;
     
     if (!self.collectionView) {
         UICollectionViewFlowLayout *flowLayout;
@@ -662,19 +993,28 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
             
             UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.contentView.bounds collectionViewLayout:flowLayout];
             
-            collectionView.backgroundColor = [UIColor grayColor];
+            collectionView.backgroundColor = [UIColor clearColor];
             collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             collectionView.translatesAutoresizingMaskIntoConstraints = YES;
             
             collectionView.dataSource = self;
             collectionView.delegate = self;
             
-            Class cellClass = NSClassFromString(self.cellClassName);
-            [collectionView registerClass:cellClass forCellWithReuseIdentifier:kContentItemCellIdentifier];
             collectionView;
         });
         
         [self.contentView addSubview:_collectionView];
+    }
+    
+    NSArray *sections = [[LIXScrollTopBarViewDataSource shareInstance] getContentItemCellClassesForIndex:index];
+    
+    for (int section = 0; section < [sections count] ; section ++) {
+        NSArray *items = [sections objectAtIndex:section];
+        for (int item = 0; item < [items count]; item ++) {
+            NSString *cellClass = [[items objectAtIndex:item] valueForKey:@"className"];
+            
+            [_collectionView registerClass:NSClassFromString(cellClass) forCellWithReuseIdentifier:cellClass];
+        }
         
     }
     
@@ -682,66 +1022,45 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    
+#pragma mark - ScrollViewDelegate
 
-    
-    if (self.dataSource && [self.dataSource respondsToSelector:@selector(numberOfSectionInContentCollectionView:)]) {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView == self.collectionView) {
+        [[LIXScrollTopBarViewDataSource shareInstance] setCurrentIndexContentOffsetY:scrollView.contentOffset];
         
-        //NSLog(@"===========contentCollectioViewSectionCount:%ld",(long)[self.dataSource numberOfSectionInContentCollectionView:self.collectionView]);
-        
-        return [self.dataSource numberOfSectionInContentCollectionView:self.collectionView];
+        NSLog(@"========set [currentIndex:%lul, contentOffsety:%f]=========",(unsigned long)[LIXScrollTopBarViewDataSource shareInstance].currentIndex, self.collectionView.contentOffset.y);
     }
-    
-    return 0;
+}
+
+#pragma mark - UICollectionViewDelegate & dataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+
+    return [[[LIXScrollTopBarViewDataSource shareInstance] getContentItemCellClassesForIndex:_currentIndex] count];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return [(NSArray *)_model count];
+    return [[[[LIXScrollTopBarViewDataSource shareInstance] getContentItemCellClassesForIndex:_currentIndex] objectAtIndex:section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    LIXSCrollTopBarCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kContentItemCellIdentifier forIndexPath:indexPath];
-    id model = [(NSArray *)_model objectAtIndex:indexPath.row];
-//    if (self.dataSource && [self.dataSource respondsToSelector:@selector(collectionView:numberOfItemsInSection:)]) {
-        
-//        cell =  [self.dataSource contentCollectionView:collectionView cellForItemAtIndexPath:indexPath];
-//    }
     
-//    if (!cell) {
-//        cell = [NSClassFromString(self.cellClassName) new];
-//    }
+    NSString *className = [[[[[LIXScrollTopBarViewDataSource shareInstance] getContentItemCellClassesForIndex:_currentIndex] objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"className"];
     
-//    if (self.dataSource && [self.dataSource respondsToSelector:@selector(contentItem:dataForIndexPath:)]) {
-//        model = [self.dataSource contentItem:cell dataForIndexPath:indexPath];
-//    }
-    
-    for (UIView *view in cell.contentView.subviews) {
-        if (view.tag == 1000) {
-            UILabel *label = (UILabel *)view;
-            label.text = model;
-        }
-        
-        return cell;
-    }
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:cell.contentView.bounds];
-    label.tag = 1000;
-    [cell.contentView addSubview:label];
-    
-    label.text = model;
-    
-    cell.backgroundColor = [UIColor redColor];
+    UICollectionViewCell<LIXScrollTopBarItemProtocol> *cell = [collectionView dequeueReusableCellWithReuseIdentifier:className forIndexPath:indexPath];
+    id data = [[LIXScrollTopBarViewDataSource shareInstance] getDataForIndex:_currentIndex];
+
+    [cell updateWithData:data];
     
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (validateDelegateWithSelector(self.dataSource, @selector(didSelectedContentItem:atIndexPath:))) {
-        [self.dataSource didSelectedContentItem:collectionView atIndexPath:indexPath];
+    if (validateDelegateWithSelector(self.dataSource, @selector(didSelectedContentItem:atIndexPath:inPage:))) {
+        [self.dataSource didSelectedContentItem:collectionView atIndexPath:indexPath inPage:_currentIndex];
     }
 }
 
@@ -773,7 +1092,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     
     self.itemSize = CGSizeMake(kDefatultTopBarCellWidth, kDefaultTopBarHeight);
     self.minimumLineSpacing = 0;
-    self.minimumInteritemSpacing = 20;
+    self.minimumInteritemSpacing = 0;
     self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     return self;
@@ -844,42 +1163,39 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
 //    UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:1];
     
     //this is the HSL method , this is simple!
-    
-    CGColorRef selectedColor = [[UIColor redColor] CGColor];
-    size_t selectedNumConponents = CGColorGetNumberOfComponents(selectedColor);
-    
-    
     UIColor *color = [UIColor colorWithHue:1 saturation:1 brightness:(1 - normalizedDistance) alpha:1];
     
-    // change transform
-    CATransform3D transform = CATransform3DIdentity;
-    CGAffineTransform affineTransform = CGAffineTransformIdentity;
-    CGFloat scale;
-    if (normalizedDistance >= 1) {
-        scale = 1;
-    }
-    else {
-        scale = 2 - normalizedDistance;
-    }
-    transform = CATransform3DMakeScale(scale, scale, 1);
     
-    affineTransform = CGAffineTransformScale(affineTransform, scale, scale);
     
-    CGFloat fontfactor = 0.2;
+    CGFloat transformFactor = 0.2;
+    
+    CGFloat (^DestinationScale)(CGFloat factor) = ^CGFloat (CGFloat factor) {
+        
+        return distanceFromTargetRectToItem < 0 ? ((1 + factor) + factor * MAX(-1, -ABS(distanceFromTargetRectToItem / attributes.size.width))) : ((1 + factor) - factor * MIN(1, ABS(distanceFromTargetRectToItem / attributes.size.width)));
+    };
+    
     //change font scale
     CGFloat fontScale ;
     
     if (self.style & LIXScrollTopBarType_fontSize) {
         
-        fontScale = distanceFromTargetRectToItem < 0 ? (1.2 + fontfactor * MAX(-1, -ABS(distanceFromTargetRectToItem / attributes.size.width))) : (1.2 - fontfactor * MIN(1, ABS(distanceFromTargetRectToItem / attributes.size.width)));
+        fontScale = DestinationScale(transformFactor);
         
     }
     else {
         
         fontScale = 1.0f;
     }
-    
     [(LIXScrollTopBarTitleCellLayoutAttributes *)attributes setFontScale:fontScale];
+    
+    // change transform
+    CATransform3D transform = CATransform3DIdentity;
+    CGAffineTransform affineTransform = CGAffineTransformIdentity;
+    CGFloat scale;
+    scale = DestinationScale(transformFactor);
+    transform = CATransform3DMakeScale(scale, scale, 1);
+    
+    affineTransform = CGAffineTransformScale(affineTransform, scale, scale);
     
     if (self.style & LIXScrollTopBarType_default) {
         
@@ -893,7 +1209,8 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
         
         attributes.transform = affineTransform;
     }
-    [(LIXScrollTopBarTitleCellLayoutAttributes *)attributes setTextColor:color];
+    
+//    [(LIXScrollTopBarTitleCellLayoutAttributes *)attributes setTextColor:color];
 }
 @end
 
@@ -934,6 +1251,7 @@ BOOL validateDelegateWithSelector(NSObject *delegate, SEL selector) {
     
     CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
     CGFloat distanceToCenter = layoutAttributes.center.x - center.x;
+//    BOOL isLeft = (distanceToCenter < 0);
     if (self.transformStyle == LIXScrollTopBarContentTransformStyle_solid) {
         CGFloat angle;
         if (distanceToCenter > 0) {

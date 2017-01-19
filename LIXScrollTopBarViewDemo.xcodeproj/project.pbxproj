@@ -16,6 +16,9 @@
 		5C9308911E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9308901E138EC3006E6CE0 /* LIXScrollTopBarViewDemoTests.m */; };
 		5C93089C1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C93089B1E138EC3006E6CE0 /* LIXScrollTopBarViewDemoUITests.m */; };
 		5C9308B11E139559006E6CE0 /* LIXScrollTopBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9308B01E139559006E6CE0 /* LIXScrollTopBarView.m */; };
+		5CE4FF821E2F5B3E008291CE /* LIXContentItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4FF801E2F5B3E008291CE /* LIXContentItemCollectionViewCell.m */; };
+		5CE4FF831E2F5B3E008291CE /* LIXContentItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE4FF811E2F5B3E008291CE /* LIXContentItemCollectionViewCell.xib */; };
+		5CE4FF861E2F764D008291CE /* LIXPage2CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4FF851E2F764D008291CE /* LIXPage2CollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,11 @@
 		5C93089D1E138EC3006E6CE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C9308AF1E139559006E6CE0 /* LIXScrollTopBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIXScrollTopBarView.h; sourceTree = "<group>"; };
 		5C9308B01E139559006E6CE0 /* LIXScrollTopBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIXScrollTopBarView.m; sourceTree = "<group>"; };
+		5CE4FF7F1E2F5B3E008291CE /* LIXContentItemCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIXContentItemCollectionViewCell.h; sourceTree = "<group>"; };
+		5CE4FF801E2F5B3E008291CE /* LIXContentItemCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIXContentItemCollectionViewCell.m; sourceTree = "<group>"; };
+		5CE4FF811E2F5B3E008291CE /* LIXContentItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LIXContentItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		5CE4FF841E2F764D008291CE /* LIXPage2CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIXPage2CollectionViewCell.h; sourceTree = "<group>"; };
+		5CE4FF851E2F764D008291CE /* LIXPage2CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIXPage2CollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +117,11 @@
 				5C93087A1E138EC3006E6CE0 /* AppDelegate.m */,
 				5C93087C1E138EC3006E6CE0 /* ViewController.h */,
 				5C93087D1E138EC3006E6CE0 /* ViewController.m */,
+				5CE4FF7F1E2F5B3E008291CE /* LIXContentItemCollectionViewCell.h */,
+				5CE4FF801E2F5B3E008291CE /* LIXContentItemCollectionViewCell.m */,
+				5CE4FF811E2F5B3E008291CE /* LIXContentItemCollectionViewCell.xib */,
+				5CE4FF841E2F764D008291CE /* LIXPage2CollectionViewCell.h */,
+				5CE4FF851E2F764D008291CE /* LIXPage2CollectionViewCell.m */,
 				5C93087F1E138EC3006E6CE0 /* Main.storyboard */,
 				5C9308821E138EC3006E6CE0 /* Assets.xcassets */,
 				5C9308841E138EC3006E6CE0 /* LaunchScreen.storyboard */,
@@ -215,7 +228,7 @@
 		5C93086B1E138EC3006E6CE0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = lixuzong;
 				TargetAttributes = {
 					5C9308721E138EC3006E6CE0 = {
@@ -265,6 +278,7 @@
 				5C9308861E138EC3006E6CE0 /* LaunchScreen.storyboard in Resources */,
 				5C9308831E138EC3006E6CE0 /* Assets.xcassets in Resources */,
 				5C9308811E138EC3006E6CE0 /* Main.storyboard in Resources */,
+				5CE4FF831E2F5B3E008291CE /* LIXContentItemCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +306,8 @@
 				5C93087E1E138EC3006E6CE0 /* ViewController.m in Sources */,
 				5C93087B1E138EC3006E6CE0 /* AppDelegate.m in Sources */,
 				5C9308781E138EC3006E6CE0 /* main.m in Sources */,
+				5CE4FF821E2F5B3E008291CE /* LIXContentItemCollectionViewCell.m in Sources */,
+				5CE4FF861E2F764D008291CE /* LIXPage2CollectionViewCell.m in Sources */,
 				5C9308B11E139559006E6CE0 /* LIXScrollTopBarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +381,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -387,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -413,6 +430,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -429,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
