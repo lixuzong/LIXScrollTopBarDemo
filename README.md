@@ -7,20 +7,20 @@
 首先是titleBar的几种样式可供选择，在使用的时候可以直接设置scrollTitleType属性就可以了，下面提供几种style的默认样式。当然你也可以传入自己的flowLayout。
 
 + LIXScrollTopBarType_default 
-![展示图片](/Users/lixu/Desktop/default.gif)
+![展示图片](http://o835bn5qj.bkt.clouddn.com/default.gif)
 
 + LIXScrollTopBarType_transform & LIXScrollTopBarType_default
-![defaultcolor&transform](/Users/lixu/Desktop/transform&color.gif)
+![defaultcolor&transform](http://o835bn5qj.bkt.clouddn.com/transform&color.gif)
 
 + LIXScrollTopBarType_transform & LIXScrollTopBarType_gradient
-![colorGradient](/Users/lixu/Desktop/colorGradient.gif)
+![colorGradient](http://o835bn5qj.bkt.clouddn.com/colorGradient.gif)
 
 > 各种样式可以叠加使用，也可以单独使用，叠加的时候可以出现各种效果，就不一一展示了。
 
 关于内容视图的滚动也提供了一种加速度的样式，最近看到百度外卖的app有加入这种模式。但是在实践的过程中发现，这种方式在滑动过程中进行屏幕旋转的过程中会出现crash。如不不支持横竖屏适配的话是完全没问题的。
 
 + contentCellScrollStyle = LIXScrollTopBarContentScrollStyle_dynamic
-![加速度](/Users/lixu/Desktop/加速度效果.gif)
+![加速度](http://o835bn5qj.bkt.clouddn.com/%E5%8A%A0%E9%80%9F%E5%BA%A6%E6%95%88%E6%9E%9C.gif)
 
 加速度效果使用的是dynamic框架，是苹果提供用来模仿物理效果的。其原理也是计算每个cell距离触点的位置，然后改变每个cell的frame，在frame改变的过程中加入物理加速度的效果。
 
