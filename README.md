@@ -1,4 +1,5 @@
-# LIXScrollTopBar
+# 动画集合Demo
 
-仿今日头条首页的左右滑动切换页面，title的选择提供了几种不同的切换样式。内容视图的上下滑动提供了物理模拟的效果，都是可以通过style来进行开关的。内容视图是一个UICollectionView，可以支持提供自定义的layout。    
-这是一个顶部滑动tab切换视图的控件，使用方法和UICollectionView类似，直接提供数据源，并且有些常用的代理方法，也可以具体制定topBar的样式，和layout。
+这是看了CoreAnimation框架，并且看了UICollectionView框架之后的一个反馈的Demo，主要包括逐帧动画的实现，探索逐帧动画的动画缓冲函数，动画在UICollectionView的应用，实现了navigation，tabBar，modal的自定义非交互转场和交互转场，还有自定义transitionContext的controller之间的转场动画。
+
+以后遇到其他的动画形式会继续添加。。。

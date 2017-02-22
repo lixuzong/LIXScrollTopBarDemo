@@ -29,17 +29,15 @@
     scrollTopBar.hideTitleBaseLine = NO;
     scrollTopBar.canScrollPage = YES;
     
-    scrollTopBar.scrollTitleType = LIXScrollTopBarType_gradient | LIXScrollTopBarType_transform;
+    scrollTopBar.scrollTitleType = LIXScrollTopBarType_gradient;
     [scrollTopBar registerPageItemClass:[UICollectionViewCell class]];
-//    scrollTopBar.selectedTitleStyle = LIXScrollTopBarTitleSelectedStyle_spring;
-//    scrollTopBar.contentCellScrollStyle = LIXScrollTopBarContentScrollStyle_dynamic;
     
     scrollTopBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     scrollTopBar.delegate = self;
     scrollTopBar.dataSource = self;
     
-    scrollTopBar.titleBarEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 50);
+//    scrollTopBar.titleBarEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 50);
     
     self.view = scrollTopBar;
 }
@@ -110,11 +108,6 @@
     
     return cell;
 }
-
-//- (UIEdgeInsets)scrollTopBar:(LIXScrollTopBarView *)scrollTopBar titleContainerView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insertForSectionAtIndex:(NSUInteger)section {
-//    
-//    return UIEdgeInsetsMake(0, 50, 0, 50);
-//}
 
 - (CGSize)scrollTopBar:(LIXScrollTopBarView *)scrollTopBar sizeForTitleBarBottomLineInpage:(NSUInteger)page {
     

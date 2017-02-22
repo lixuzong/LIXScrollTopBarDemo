@@ -7,11 +7,25 @@
 #import <UIKit/UIKit.h>
 @class LIXSCrollTopBarCell;
 
+
+/**
+ 这个版本暂时没有可以借鉴的点击动画，暂不支持
+
+ - LIXScrollTopBarTitleSelectedStyle_default: 暂不支持
+ - LIXScrollTopBarTitleSelectedStyle_spring: 暂不支持
+ */
 typedef NS_ENUM(NSUInteger, LIXScrollTopBarTitleSelectedStyle) {
     LIXScrollTopBarTitleSelectedStyle_default,
     LIXScrollTopBarTitleSelectedStyle_spring
 };
 
+
+/**
+ 提供page滑动的动画，研发中
+
+ - LIXScrollTopBarContentTransformStyle_default: 研发中
+ - LIXScrollTopBarContentTransformStyle_solid: 研发中
+ */
 typedef NS_ENUM(NSUInteger, LIXScrollTopBarContentTransformStyle) {
     LIXScrollTopBarContentTransformStyle_default,
     LIXScrollTopBarContentTransformStyle_solid
@@ -24,6 +38,13 @@ typedef NS_ENUM(NSUInteger, LIXScrollTopBarType) {
     LIXScrollTopBarType_fontSize = 1 << 3
 };
 
+
+/**
+ contentView里面cell的动画效果，目前有加速效果，由于旋转屏幕的时候会产生问题，暂时不能用
+
+ - LIXScrollTopBarContentScrollStyle_default: 默认效果
+ - LIXScrollTopBarContentScrollStyle_dynamic: 加速度效果，调优中
+ */
 typedef NS_ENUM(NSUInteger, LIXScrollTopBarContentScrollStyle) {
     LIXScrollTopBarContentScrollStyle_default,
     LIXScrollTopBarContentScrollStyle_dynamic
